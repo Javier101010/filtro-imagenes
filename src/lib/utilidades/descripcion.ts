@@ -10,7 +10,9 @@ export let explicacion_media = {
                 Y la matriz de la imagen es la siguiente:`,
     "matriz1": ``,
     "descripcion2": "Despues de aplicar la mascara de 3x3, la matriz resultante es:",
-    "matriz2": "",}
+    "matriz2": "",
+    "descripcion3": "",
+    "matriz3": ""}
 
 export let explicacion_mediana = {
     "filtro": "Filtro de mediana",
@@ -28,7 +30,9 @@ export let explicacion_mediana = {
                 `,
     "matriz1": "",
     "descripcion2": "Despues de aplicar el filtro de mediana, la matriz resultante es:",
-    "matriz2": "",}
+    "matriz2": "",
+    "descripcion3": "",
+    "matriz3": ""}
 
 export let explicacion_sobel = {
     "filtro": "Filtro de Sobel",
@@ -42,7 +46,12 @@ export let explicacion_sobel = {
                 Y la matriz de la imagen es la siguiente:`,
     "matriz1": "",
     "descripcion2": "Despues de aplicar el filtro de Sobel, la matriz resultante es:",
-    "matriz2": "",}
+    "matriz2": "",
+    "descripcion3": "Sin embargo, esta matriz aun no se puede usar, para ello se tiene que normalizar. "+
+                "La normalización se realiza para escalar los valores de la matriz resultante a un rango de 0 a 255, "+
+                "tomando los valores mínimos y máximos de la matriz. "+
+                "Despues de normalizar la matriz, el resultado final es: ",
+    "matriz3": ""}
 
 export let explicacion_laplaciano = {
     "filtro": "Filtro de Laplaciano",
@@ -56,4 +65,9 @@ export let explicacion_laplaciano = {
                 Y la matriz de la imagen es la siguiente:`,
     "matriz1": "",
     "descripcion2": "Despues de aplicar el filtro de Laplaciano, la matriz resultante es:",
-    "matriz2": "",}
+    "matriz2": "",
+    "descripcion3": "Sin embargo, esta matriz aun no se puede usar, para ello se tiene que normalizar. "+
+                    "La normalización se realiza para escalar los valores de la matriz resultante a un rango de 0 a 255, "+
+                    "tomando los valores mínimos y máximos de la matriz. "+
+                    "Despues de normalizar la matriz, el resultado final es: ",
+    "matriz3": ""}

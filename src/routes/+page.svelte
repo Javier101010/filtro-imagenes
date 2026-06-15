@@ -29,7 +29,9 @@
 		"filtro_media": [],
 		"filtro_mediana": [],
 		"filtro_sobel": [],
-		"filtro_laplaciano": []
+		"filtro_sobel_crudo": [],
+		"filtro_laplaciano": [],
+		"filtro_laplaciano_crudo": []
 	};
 
 	/* Variable para las explicaciones */
@@ -40,6 +42,8 @@
 		"matriz1": "",
 		"descripcion2": "",
 		"matriz2": "",
+		"descripcion3": "",
+		"matriz3": ""
 	});
 
 	
@@ -64,23 +68,121 @@
 
 	// Coordendas de la imagen original
 	
-	function subirImagen() {
-		const input = document.createElement('input');
+	async function subirImagen() {
+
+		const input =
+			document.createElement('input');
 
 		input.type = 'file';
-		input.accept = 'image/*';
 
-		input.onchange = (event) => {
-			const file = (event.target as HTMLInputElement).files?.[0];
+		input.accept =
+			'image/jpeg,image/jpg';
+
+		input.onchange = async (event) => {
+
+			const file =
+				(event.target as HTMLInputElement)
+					.files?.[0];
 
 			if (!file) return;
 
+			const tiposPermitidos = [
+				'image/jpeg',
+				'image/jpg'
+			];
+
+			if (
+				!tiposPermitidos.includes(
+					file.type
+				)
+			) {
+				alert(
+					'Solo se permiten imágenes JPG o JPEG.'
+				);
+				return;
+			}
+
+			const gris =
+				await esEscalaDeGrises(file);
+
+			if (!gris) {
+				alert(
+					'La imagen debe estar en escala de grises.'
+				);
+				return;
+			}
+
 			archivoImagen = file;
 
-			imagenPreview = URL.createObjectURL(file);
+			imagenPreview =
+				URL.createObjectURL(file);
 		};
 
 		input.click();
+	}
+
+	async function esEscalaDeGrises(
+		file: File
+	): Promise<boolean> {
+
+		return new Promise((resolve) => {
+
+			const img = new Image();
+
+			img.onload = () => {
+
+				const canvas =
+					document.createElement('canvas');
+
+				canvas.width = img.width;
+				canvas.height = img.height;
+
+				const ctx =
+					canvas.getContext('2d');
+
+				if (!ctx) {
+					resolve(false);
+					return;
+				}
+
+				ctx.drawImage(img, 0, 0);
+
+				const datos =
+					ctx.getImageData(
+						0,
+						0,
+						canvas.width,
+						canvas.height
+					).data;
+
+				for (
+					let i = 0;
+					i < datos.length;
+					i += 4
+				) {
+
+					const r = datos[i];
+					const g = datos[i + 1];
+					const b = datos[i + 2];
+
+					const tolerancia = 5;
+
+					if (
+						Math.abs(r - g) > tolerancia ||
+						Math.abs(g - b) > tolerancia ||
+						Math.abs(r - b) > tolerancia
+					) {
+						resolve(false);
+						return;
+					}
+				}
+
+				resolve(true);
+			};
+
+			img.src =
+				URL.createObjectURL(file);
+		});
 	}
 
 	async function dibujarImagen() {
@@ -206,7 +308,26 @@
 	}
 
 	async function procesarImagen() {
-		if (!archivoRecortado) return;
+		if (!archivoImagen) {
+			alert('Primero debe cargar una imagen.');
+			return;
+		}
+
+		if (!archivoRecortado) {
+			alert('Debe seleccionar un recorte haciendo click sobre la imagen');
+			return;
+		}
+
+		const hayFiltrosSeleccionados =
+			filtros.media ||
+			filtros.mediana ||
+			filtros.sobel ||
+			filtros.laplaciano;
+
+		if (!hayFiltrosSeleccionados) {
+			alert('Seleccione al menos un filtro.');
+			return;
+		}
 
 		explicaciones = {
 			filtro: "",
@@ -214,7 +335,9 @@
 			proceso: "",
 			matriz1: "",
 			descripcion2: "",
-			matriz2: ""
+			matriz2: "",
+			descripcion3: "",
+			matriz3: ""
 		};
 
 		procesando = true;
@@ -306,6 +429,9 @@
 					matrizATexto(matrices.matriz_original);
 
 				expl_sobel.matriz2 =
+					matrizATexto(matrices.filtro_sobel_crudo);
+
+				expl_sobel.matriz3 =
 					matrizATexto(matrices.filtro_sobel);
 			}
 
@@ -317,6 +443,9 @@
 					matrizATexto(matrices.matriz_original);
 
 				expl_laplaciano.matriz2 =
+					matrizATexto(matrices.filtro_laplaciano_crudo);
+
+				expl_laplaciano.matriz3 =
 					matrizATexto(matrices.filtro_laplaciano);
 			}
 
@@ -377,6 +506,18 @@
 					<p class="text-white">{explicaciones.descripcion2}</p>
 					<br />
 					<pre class="text-white">{explicaciones.matriz2}</pre>
+					{#if explicaciones.descripcion3}
+						<br />
+						<p class="text-white">
+							{explicaciones.descripcion3}
+						</p>
+
+						<br />
+
+						<pre class="text-white">
+							{explicaciones.matriz3}
+						</pre>
+					{/if}
 			</div>
 		</div>
 
