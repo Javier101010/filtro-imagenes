@@ -1,4 +1,5 @@
 const API_URL = 'https://filtro-backend-3.onrender.com';
+//const API_URL = 'http://localhost:8000';
 
 export async function explicacionApi(filtros: string[], imagen: File) {
 	const formData = new FormData();

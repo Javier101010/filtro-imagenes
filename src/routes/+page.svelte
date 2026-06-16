@@ -506,25 +506,22 @@
 					<p class="text-white">{explicaciones.descripcion2}</p>
 					<br />
 					<pre class="text-white">{explicaciones.matriz2}</pre>
-					{#if explicaciones.descripcion3}
 						<br />
 						<p class="text-white">
 							{explicaciones.descripcion3}
 						</p>
-
 						<br />
-
 						<pre class="text-white">
 							{explicaciones.matriz3}
 						</pre>
-					{/if}
+
 			</div>
 		</div>
 
 		<!-- PANEL DERECHO -->
 		<div
 			class="flex flex-col rounded-2xl border-3 border-black bg-gray-700 p-5 shadow-2xl lg:col-span-2"
-		>
+			>
 			<h1 class="mb-4 text-3xl font-bold text-white">Filtrado de Imágenes</h1>
 
 			<div class="h-1 w-full bg-white"></div>
@@ -683,6 +680,13 @@
 					</div>
 				</div>
 			</div>
+			<br/>
+			<h2 class="text-white font-bold">Este Proyecto fue realizado por el grupo 5 del curso de Matematica computacional</h2>
+			<br/>
+			<p class="text-white">Link de descarga del fronted: </p>
+			<a class="mb-3" href="https://github.com/Javier101010/filtro-imagenes" target="_blank">Enlace del frontend</a>
+			<p class="text-white">Link de descarga del backend: </p>
+			<a href="https://github.com/Javier101010/filtro-backend" target="_blank">Enlace del backend</a>
 		</div>
 	</div>
 </div>

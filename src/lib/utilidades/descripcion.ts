@@ -51,7 +51,7 @@ export let explicacion_sobel = {
                 "La normalización se realiza para escalar los valores de la matriz resultante a un rango de 0 a 255, "+
                 "tomando los valores mínimos y máximos de la matriz. "+
                 "Despues de normalizar la matriz, el resultado final es: ",
-    "matriz3": ""}
+    "matriz3": ``}
 
 export let explicacion_laplaciano = {
     "filtro": "Filtro de Laplaciano",
@@ -70,4 +70,4 @@ export let explicacion_laplaciano = {
                     "La normalización se realiza para escalar los valores de la matriz resultante a un rango de 0 a 255, "+
                     "tomando los valores mínimos y máximos de la matriz. "+
                     "Despues de normalizar la matriz, el resultado final es: ",
-    "matriz3": ""}
+    "matriz3": ``}
